@@ -2,30 +2,30 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader } from './Loader';
 import { PeopleTable } from './PersonalTable';
+import { getPeople } from '../../api';
+import { Person } from '../../types';
 
-const API_URL =
-  'https://mate-academy.github.io/react_people-table/api/people.json';
+// const API_URL =
+//   'https://mate-academy.github.io/react_people-table/api/people.json';
 
-export const getPeople = () => {
-  return fetch(API_URL).then(response => {
-    if (!response.ok) {
-      throw new Error();
-    }
+// export const getPeople = () => {
+//   return fetch(API_URL).then(response => {
+//     if (!response.ok) {
+//       throw new Error();
+//     }
 
-    return response.json();
-  });
-};
+//     return response.json();
+//   });
+// };
 
 export const PeoplePage = () => {
   const { slug } = useParams();
 
-  const [people, setPeople] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [people, setPeople] = useState<Person[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [hasErrow, setHasErrow] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
-
     getPeople()
       .then(data => {
         setPeople(data);
